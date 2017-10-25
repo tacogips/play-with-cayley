@@ -35,7 +35,7 @@ func main() {
 
 	// Now we create the path, to get to our data
 	//p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is of course"))
-	p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is also"))
+	p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is of course"))
 
 	// This is more advanced example of the query.
 	// Simpler equivalent can be found in hello_world example.
