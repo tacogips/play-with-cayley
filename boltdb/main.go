@@ -31,9 +31,11 @@ func main() {
 	}
 
 	store.AddQuad(quad.Make("phrase of the day", "is of course", "Hello BoltDB!", "demo graph"))
+	store.AddQuad(quad.Make("phrase of the day", "is also", "Hello Graph DB", "demo graph2"))
 
 	// Now we create the path, to get to our data
-	p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is of course"))
+	//p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is of course"))
+	p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is also"))
 
 	// This is more advanced example of the query.
 	// Simpler equivalent can be found in hello_world example.
@@ -55,7 +57,10 @@ func main() {
 		value := store.NameOf(token)        // get the value in the node (RDF)
 		nativeValue := quad.NativeOf(value) // convert value to normal Go type
 
-		fmt.Println(nativeValue) // print it!
+		fmt.Printf("%#v\n", token)
+		fmt.Printf("%#v\n", value)
+		fmt.Printf("%#v\n", nativeValue)
+
 	}
 	if err := it.Err(); err != nil {
 		log.Fatalln(err)
