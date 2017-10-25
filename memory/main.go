@@ -27,8 +27,8 @@ import (
 //              +---+
 //
 var simpleGraph = []quad.Quad{
-	quad.Make("A", "follows", "B", ""),
-	quad.Make("C", "follows", "B", ""),
+	quad.Make("A", "follows", "B", "love B"),
+	quad.Make("C", "follows", "B", "hate B"),
 	quad.Make("C", "follows", "D", ""),
 	quad.Make("D", "follows", "B", ""),
 	quad.Make("B", "follows", "F", ""),
@@ -58,6 +58,15 @@ func main() {
 
 	fmt.Printf("%#v\n", store.Size())
 
+	store.AddQuad(quad.Make("whoever", "follows", "B", "lightly"))
+	store.AddQuad(quad.Make("whoever_another", "follows", "B", "heavily"))
+
+	//store.RemoveQuad(quad.Make("whoever_another", "follows", "B", "heavily"))
+
+	quadValB := quad.String("B")
+
+	store.RemoveNode(store.ValueOf(quadValB))
+
 	// Now we create the path, to get to our data
 	//p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is of course"))
 	//p := cayley.StartPath(store, quad.String("phrase of the day")).Out("is of course")
@@ -72,21 +81,21 @@ func main() {
 
 	defer it.Close()
 
-	println("by iterator ==================== ")
-	for it.Next() {
-		token := it.Result()                // get a ref to a node (backend-specific)
-		value := store.NameOf(token)        // get the value in the node (RDF)
-		nativeValue := quad.NativeOf(value) // convert value to normal Go type
-
-		println("----------------")
-		fmt.Printf("%#v\n", token)
-		fmt.Printf("quad value %#v\n", value) //panic: interface conversion: graph.Value is iterator.Int64Quad, not iterator.Int64Node
-		fmt.Printf("native %#v\n", nativeValue)
-	}
-	if err := it.Err(); err != nil {
-		log.Fatalln(err)
-	}
-
+	//	println("by iterator ==================== ")
+	//	for it.Next() {
+	//		token := it.Result()                // get a ref to a node (backend-specific)
+	//		value := store.NameOf(token)        // get the value in the node (RDF)
+	//		nativeValue := quad.NativeOf(value) // convert value to normal Go type
+	//
+	//		println("----------------")
+	//		fmt.Printf("%#v\n", token)
+	//		fmt.Printf("quad value %#v\n", value) //panic: interface conversion: graph.Value is iterator.Int64Quad, not iterator.Int64Node
+	//		fmt.Printf("native %#v\n", nativeValue)
+	//	}
+	//	if err := it.Err(); err != nil {
+	//		log.Fatalln(err)
+	//	}
+	//
 	println(" all quad  iterate ==================== ")
 
 	{
@@ -98,7 +107,7 @@ func main() {
 			//nativeValue := quad.NativeOf(value)
 			println("----------------")
 
-			//value := store.NameOf(token) // panic
+			//value := store.NameOf(token) // panic not node
 
 			//asQuad := store.Quad(token)
 			fmt.Printf("%#v\n", reflect.TypeOf(token).String())
