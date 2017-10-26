@@ -27,8 +27,8 @@ import (
 //              +---+
 //
 var simpleGraph = []quad.Quad{
-	quad.Make("A", "follows", "B", "love B"),
-	quad.Make("C", "follows", "B", "hate B"),
+	quad.Make("A", "follows", "B", ""),
+	quad.Make("C", "follows", "B", ""),
 	quad.Make("C", "follows", "D", ""),
 	quad.Make("D", "follows", "B", ""),
 	quad.Make("B", "follows", "F", ""),
@@ -58,14 +58,11 @@ func main() {
 
 	fmt.Printf("%#v\n", store.Size())
 
-	store.AddQuad(quad.Make("whoever", "follows", "B", "lightly"))
-	store.AddQuad(quad.Make("whoever_another", "follows", "B", "heavily"))
+	store.AddQuad(quad.Make("whoever", "follows", "B", ""))
+	store.AddQuad(quad.Make("whoever_another", "follows", "B", ""))
 
-	//store.RemoveQuad(quad.Make("whoever_another", "follows", "B", "heavily"))
-
-	quadValB := quad.String("B")
-
-	store.RemoveNode(store.ValueOf(quadValB))
+	//quadValB := quad.String("B")
+	//store.RemoveNode(store.ValueOf(quadValB))
 
 	// Now we create the path, to get to our data
 	//p := cayley.StartPath(store, quad.String("phrase of the day")).Out(quad.String("is of course"))
